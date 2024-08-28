@@ -27,7 +27,7 @@ body {
 a.active {
     background-color: #9800FF;
     color: white !important;
-    border-radius: 50px;
+    border-radius: 5px;
 }
 
 button.active {

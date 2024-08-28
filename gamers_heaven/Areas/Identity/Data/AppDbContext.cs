@@ -1,4 +1,5 @@
 ﻿using gamers_heaven.Areas.Identity.Data;
+using gamers_heaven.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,8 +12,12 @@ public class AppDbContext : IdentityDbContext<AppUser>
     {
     }
 
-    protected override void OnModelCreating(ModelBuilder builder)
+    public DbSet<Products> Products { get; set; }
+    public DbSet<Cart> Cart { get; set; }
+    public DbSet<CartDetails> CartDetails { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        base.OnModelCreating(builder);
+        base.OnModelCreating(modelBuilder);
     }
 }
