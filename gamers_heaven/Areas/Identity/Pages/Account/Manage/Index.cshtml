@@ -1,11 +1,14 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Profile";
+    ViewData["Title"] = "Personal Informations";
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
-<h3>@ViewData["Title"]</h3>
+<h3 class="mb-4" style="color: #9800FF">
+    <i class="bi bi-pencil-square"></i>
+    @ViewData["Title"]
+</h3>
 <partial name="_StatusMessage" for="StatusMessage" />
 <div class="row">
     <div class="col-md-6">
@@ -15,7 +18,7 @@
                 <input asp-for="Input.Name" class="form-control" placeholder="Please enter your name." />
                 <label asp-for="Input.Name" class="form-label"></label>
                 <span asp-validation-for="Input.Name" class="text-danger"></span>
-            </div> 
+            </div>
             <div class="form-floating mb-3">
                 <input asp-for="Input.Age" class="form-control" placeholder="Please enter your age." />
                 <label asp-for="Input.Age" class="form-label"></label>
@@ -31,11 +34,11 @@
                 <label asp-for="Username" class="form-label"></label>
             </div>
             <div class="form-floating mb-3">
-                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number."/>
+                <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Please enter your phone number." />
                 <label asp-for="Input.PhoneNumber" class="form-label"></label>
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
-            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary">Save</button>
+            <button id="update-profile-button" type="submit" class="w-100 btn btn-lg btn-primary" style="background-color: #9800FF; border-color: #9800FF;">Save</button>
         </form>
     </div>
 </div>

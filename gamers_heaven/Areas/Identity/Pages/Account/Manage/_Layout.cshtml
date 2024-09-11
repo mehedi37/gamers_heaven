@@ -1,0 +1,41 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout) && parentLayout != null)
+    {
+        Layout = parentLayout.ToString();
+    }
+    else
+    {
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
+}
+
+<div>
+    <div class="row">
+        <div class="col-md-2">
+            <partial name="_ManageNav" />
+        </div>
+        <div class="col-md-10">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .nav-pills .nav-link {
+        border-radius: 5px;  
+        margin-bottom: 5px;
+    }
+
+        .nav-pills .nav-link.active {
+            background-color: #9800FF;
+            color: white;
+        }
+</style>

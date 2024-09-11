@@ -3,6 +3,7 @@ using gamers_heaven.Data;
 using gamers_heaven.Models;
 using gamers_heaven.Services;
 using gamers_heaven.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -10,6 +11,7 @@ using System.Security.Claims;
 
 namespace gamers_heaven.Controllers
 {
+    [Authorize]
     public class SellController : Controller
     {
         private readonly ILogger<SellController> _logger;
