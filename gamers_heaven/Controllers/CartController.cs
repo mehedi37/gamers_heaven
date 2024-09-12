@@ -49,14 +49,37 @@ namespace gamers_heaven.Controllers
             var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var product = await _context.Products.FindAsync(productId);
 
-            if (product == null || product.Stock < quantity)
+            if (product == null)
             {
-                return BadRequest("Insufficient stock or product not found.");
+                return BadRequest("Product not found.");
             }
 
-            await _cartService.AddToCartAsync(userId, productId, quantity);
+            var cart = await _cartService.GetCartByUserIdAsync(userId);
+            var cartDetail = cart?.CartDetails.FirstOrDefault(cd => cd.ProductId == productId);
+
+            if (cartDetail != null)
+            {
+                int newQuantity = cartDetail.Quantity + quantity;
+                if (newQuantity > product.Stock)
+                {
+                    newQuantity = product.Stock;
+                    TempData["Message"] = $"Only {product.Stock} items available for {product.ProductName}.";
+                }
+                await _cartService.UpdateCartAsync(cartDetail.CartDetailsId, newQuantity);
+            }
+            else
+            {
+                if (quantity > product.Stock)
+                {
+                    quantity = product.Stock;
+                    TempData["Message"] = $"Only {product.Stock} items available for {product.ProductName}.";
+                }
+                await _cartService.AddToCartAsync(userId, productId, quantity);
+            }
+
             return RedirectToAction("Index");
         }
+
 
         [HttpPost]
         public async Task<IActionResult> UpdateCart(int cartDetailsId, int quantity)
@@ -73,13 +96,14 @@ namespace gamers_heaven.Controllers
             // Check if the quantity is greater than the product's stock
             if (quantity > product.Stock)
             {
-                // Set the quantity to the product's stock
                 quantity = product.Stock;
+                TempData["StockMessage"] = "The quantity has been adjusted to the available stock.";
             }
 
             await _cartService.UpdateCartAsync(cartDetailsId, quantity);
             return RedirectToAction("Index");
         }
+
 
         [HttpPost]
         public async Task<IActionResult> RemoveFromCart(int cartDetailsId)

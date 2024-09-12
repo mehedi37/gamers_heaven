@@ -48,7 +48,7 @@ namespace gamers_heaven.Controllers
                     .Where(p => p.UserId != userId)
                     .ToListAsync()
                 : await _context.Products
-                    .Where(p => (p.ProductName.Contains(query) || p.ProductDescription.Contains(query)) && p.UserId != userId)
+                    .Where(p => (p.ProductName.ToLower().Contains(query) || p.ProductDescription.ToLower().Contains(query)) && p.UserId != userId)
                     .ToListAsync();
 
             return PartialView("Partials/_GamesList", products);
